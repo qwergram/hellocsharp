@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Entity App</title>
+</head>
+<body>
+
+    <div>
+        <h2>All Entities</h2>
+        <ul id="entities" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="entity_id" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="entity" />
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+    var uri = 'api/entity';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of products.
+            $.each(data, function (key, item) {
+              // Add a list item for the product.
+              $('<li>', { text: formatItem(item) }).appendTo($('#entities'));
+            });
+          });
+    });
+
+    function formatItem(item) {
+      return item.name + ': ' + item.health + ' hp';
+    }
+
+    function find() {
+      var id = $('#entity_id').val();
+      $.getJSON(uri + '/' + id)
+          .done(function (data) {
+            $('#entity').text(formatItem(data));
+          })
+          .fail(function (jqXHR, textStatus, err) {
+            $('#entity').text('Error: ' + err);
+          });
+    }
+    </script>
+</body>
+</html>
