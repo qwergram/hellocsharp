@@ -17,12 +17,12 @@ namespace Tutorial1.Controllers
             new Entity { id=3, name="PengraBot", age=1, health=2000 },
         };
 
-        public IEnumerable<Entity> getAllEntities()
+        public IEnumerable<Entity> GetAllEntities()
         {
             return entities;
         }
 
-        public IHttpActionResult getEntity(int id)
+        public IHttpActionResult GetEntity(int id)
         {
             Entity entity = entities.FirstOrDefault((e) => e.id == id);
             if (entity == null)
